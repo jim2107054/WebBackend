@@ -40,6 +40,9 @@ const app = express();// we can access all the things, which are present in expr
 const port = 8000;
 
 // app.get("which route",callbackfucntion) => get request.
+/* syntax to create server in express.
+ app.[http method(get,post,...)]('route',callback)
+ */
 app.get("/",(req,res)=>{
     // res.end('Welcome to the Home page. I am Jim');
     res.send('Welcome to Home Page. Same will work for this.'); 
@@ -53,11 +56,39 @@ app.get("/contact",(req,res)=>{
     res.end('Welcome to the contact page.');
 })
 
+app.get("/json",(req,res)=>{//we can send response in json format also.
+    // res.json({name:"jim",Dept:"cse",Roll:'54'})
+    res.json([
+        {
+            name:"Jahid Hasan Jim",
+            Dept:"CSE",
+            Roll:'54',
+            Height:'5.9'
+        },
+        {
+            name:"Pritom",
+            Dept:"CSE",
+            Roll:52,
+            Height:'5.75'
+        },
+        {
+            name:"Spandan",
+            Dept:"CSE",
+            Roll:45,
+            Height:'5.8'
+        }
+    ])
+})
+
 app.get("*",(req,res)=>{// * means all the routes.
-    res.end('404 page not found!');
+    res.end('<p><h1>404</h1>page <strong>not</strong>found!</p>');//if we want, we can write html as well.
 })
 
 app.listen(port,()=>{
     console.log('server is running..........');
     console.log(`server is start running at port ${port}`); 
 })
+
+/*Instead of running each time, we can change our script file in package.json by installing nodemon.*/
+
+
