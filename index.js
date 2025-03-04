@@ -39,6 +39,60 @@ import express from 'express';
 const app = express();// we can access all the things, which are present in express.
 const port = 8000;
 
+
+let users = [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "position": "Software Engineer",
+      "department": "IT",
+      "email": "alice.johnson@company.com",
+      "phone": "+1-555-1010",
+      "salary": 75000,
+      "joining_date": "2022-03-15"
+    },
+    {
+      "id": 2,
+      "name": "Bob Smith",
+      "position": "Data Analyst",
+      "department": "Data Science",
+      "email": "bob.smith@company.com",
+      "phone": "+1-555-1020",
+      "salary": 68000,
+      "joining_date": "2021-07-20"
+    },
+    {
+      "id": 3,
+      "name": "Charlie Brown",
+      "position": "Project Manager",
+      "department": "Management",
+      "email": "charlie.brown@company.com",
+      "phone": "+1-555-1030",
+      "salary": 90000,
+      "joining_date": "2019-05-10"
+    },
+    {
+      "id": 4,
+      "name": "David Wilson",
+      "position": "UI/UX Designer",
+      "department": "Design",
+      "email": "david.wilson@company.com",
+      "phone": "+1-555-1040",
+      "salary": 72000,
+      "joining_date": "2023-01-25"
+    },
+    {
+      "id": 5,
+      "name": "Emily Davis",
+      "position": "HR Manager",
+      "department": "Human Resources",
+      "email": "emily.davis@company.com",
+      "phone": "+1-555-1050",
+      "salary": 85000,
+      "joining_date": "2020-09-05"
+    }
+]    
+
 //middleware => it is a function that has access to the request and response object. client request => middleware => response.
 app.use(express.json());//middleware for json data. 
 
@@ -49,6 +103,23 @@ app.use(express.json());//middleware for json data.
 app.get("/",(req,res)=>{
     // res.end('Welcome to the Home page. I am Jim');
     res.send('Welcome to Home Page. I am Jim'); 
+})
+
+app.get('/users',(req,res)=>{
+    res.send(users);
+})
+
+app.get('/users/:id',(req,res)=>{
+    const id = req.params.id;
+    const existingUser = users.find((user)=>{
+        return user.id == id;
+    })
+    if(existingUser){
+        res.send(existingUser);
+    }
+    else{
+        res.send('User not found');
+    }
 })
 
 app.get("/about",(req,res)=>{
