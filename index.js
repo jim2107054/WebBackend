@@ -39,13 +39,16 @@ import express from 'express';
 const app = express();// we can access all the things, which are present in express.
 const port = 8000;
 
+//middleware => it is a function that has access to the request and response object. client request => middleware => response.
+app.use(express.json());//middleware for json data. 
+
 // app.get("which route",callbackfucntion) => get request.
 /* syntax to create server in express.
  app.[http method(get,post,...)]('route',callback)
  */
 app.get("/",(req,res)=>{
     // res.end('Welcome to the Home page. I am Jim');
-    res.send('Welcome to Home Page. Same will work for this.'); 
+    res.send('Welcome to Home Page. I am Jim'); 
 })
 
 app.get("/about",(req,res)=>{
@@ -82,6 +85,12 @@ app.get("/json",(req,res)=>{//we can send response in json format also.
 
 app.get("*",(req,res)=>{// * means all the routes.
     res.end('<p><h1>404</h1>page <strong>not</strong>found!</p>');//if we want, we can write html as well.
+})
+
+app.post("/",(req,res)=>{
+    let body = req.body;
+    console.log(body);
+    res.send('Post request is called');
 })
 
 app.listen(port,()=>{
