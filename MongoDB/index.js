@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import User from './models/user_model.js';//import the model to perform CRUD operations. 
 
 const app = express();
 const port = 8000;
@@ -24,6 +25,36 @@ const connectDB = async () => {//we will call it when our server starts. so we w
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+//*********** Connect with DataBase. Now we perform CRUD operation. *******************//
+//create a middleware to parse the incoming data.
+app.use(express.json());
+
+app.post('/create', async (req, res) => {
+  //logic to create a user
+  try {
+    // const user = new User({
+    //   name: 'Jahid Hasan Jim',
+    //   age: 25,
+    //   email: 'mdjahidhasan@gmail.com',
+    //   userName: 'Jim'
+    // });
+    let { name, age, email, userName } = req.body;
+    const user = await User.create({ // we create an User and store them in 'user' variable. 
+      name,
+      age,
+      email,
+      userName //as key and value are same, we can write it once. If they are different, we have to write it twice. like name:name(key:value)
+    })
+    res.status(201).json({message:"User created successfully",user});//201 means that the user is created successfully.
+  }
+  catch (error) {
+    res.status(500).json({message:"Internal server error"});//500 means that there is some internal server error.
+    console.log(error);
+  }
+  res.send('Create User');
+});
+
 
 app.listen(port, () => {
     connectDB();//After starting the server, we will call the connectDB function.
