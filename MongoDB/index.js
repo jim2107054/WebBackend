@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 //create a middleware to parse the incoming data.
 app.use(express.json());
 
-app.post('/create', async (req, res) => {
+app.post("/create", async (req, res) => {
   //logic to create a user
   try {
     // const user = new User({
@@ -39,21 +39,44 @@ app.post('/create', async (req, res) => {
     //   email: 'mdjahidhasan@gmail.com',
     //   userName: 'Jim'
     // });
-    let { name, age, email, userName } = req.body;
-    const user = await User.create({ // we create an User and store them in 'user' variable. 
+    let {name,age,email,userName} = req.body;
+    const newUser = await User.create({ // we create an User and store them in 'user' variable. 
       name,
       age,
       email,
       userName //as key and value are same, we can write it once. If they are different, we have to write it twice. like name:name(key:value)
     })
-    res.status(201).json({message:"User created successfully",user});//201 means that the user is created successfully.
+    return res.status(201).json({message:"User created successfully"});//201 means that the user is created successfully.
   }
   catch (error) {
-    res.status(500).json({message:"Internal server error"});//500 means that there is some internal server error.
-    console.log(error);
+    return res.status(500).json({message:"Internal server error"});//500 means that there is some internal server error.
+    // console.log(error);
   }
   res.send('Create User');
 });
+
+//Read all users
+app.get("/read",async(req,res)=>{
+  try{
+    const users = await User.find();//find all the users and store them in the users variable.
+    return res.status(200).json(users);//return all the users in json format.
+  }
+  catch(error){
+    return res.status(400).json({message:"User not found"});//400 means that the user is not found.
+  }
+})
+
+//Read a single user
+app.get("/read/:polapan",async(req,res)=>{
+  try{
+    const users = await User.findOne({userName:req.params.polapan});//find all the users and store them in the users variable.
+    return res.status(200).json(users);//return all the users in json format.
+  }
+  catch(error){
+    return res.status(400).json({message:"User not found"});//400 means that the user is not found.
+  }
+})
+
 
 
 app.listen(port, () => {
