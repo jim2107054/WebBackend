@@ -1,0 +1,15 @@
+{
+  "name": "backend-course",
+  "version": "1.0.0",
+  "description": "I'm start learning backend course.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "jim2107054",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  }
+}
