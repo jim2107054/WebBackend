@@ -58,7 +58,7 @@ app.post("/create", async (req, res) => {
 //Read all users
 app.get("/read",async(req,res)=>{
   try{
-    const users = await User.find();//find all the users and store them in the users variable.
+    const users = await User.find({$and:[{age:{$gt:18}},{userName:{$eq:"Jim2107054"}}]});//find all the users and store them in the users variable.
     return res.status(200).json(users);//return all the users in json format.
   }
   catch(error){
@@ -71,6 +71,19 @@ app.get("/read/:polapan",async(req,res)=>{
   try{
     const users = await User.findOne({userName:req.params.polapan});//find all the users and store them in the users variable.
     return res.status(200).json(users);//return all the users in json format.
+  }
+  catch(error){
+    return res.status(400).json({message:"User not found"});//400 means that the user is not found.
+  }
+})
+
+//Update user data.
+app.put("/update/:id", async (req,res)=>{
+  try{
+    let {newName} = req.body;// user will provide the name to update.
+    let id = req.params.id;// user will provide the id of the user to update.
+    let user = await User.findByIdAndUpdate(id,{name:newName});
+    return res.status(200).json({message:"User updated successfully"},user);//200 means that the user is updated successfully.
   }
   catch(error){
     return res.status(400).json({message:"User not found"});//400 means that the user is not found.
