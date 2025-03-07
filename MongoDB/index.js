@@ -80,10 +80,34 @@ app.get("/read/:polapan",async(req,res)=>{
 //Update user data.
 app.put("/update/:id", async (req,res)=>{
   try{
-    let {newName} = req.body;// user will provide the name to update.
+    let {name,age,email} = req.body;// user will provide the name to update.
     let id = req.params.id;// user will provide the id of the user to update.
-    let user = await User.findByIdAndUpdate(id,{name:newName});
-    return res.status(200).json({message:"User updated successfully"},user);//200 means that the user is updated successfully.
+    let user = await User.findByIdAndUpdate(id,{name,age,email},{new:true});// as we set new:true, it will return the updated user faster.
+    return res.status(200).json(user);//200 means that the user is updated successfully.
+  }
+  catch(error){
+    return res.status(400).json({message:"User not found"});//400 means that the user is not found.
+  }
+})
+
+//Update a single user using email.
+app.put("/update", async (req,res)=>{
+  try{
+    let {name,age,email} = req.body;
+    let user = await User.updateOne({email},{name,age},{new:true});//we find user by email and update the name and age.
+    return res.status(200).json(user);//after finding user by email, we update the name and age and return the updated user.
+  }
+  catch(error){
+    return res.status(400).json({message:"User not found"});//400 means that the user is not found.
+  }
+})
+
+//Delete a user
+app.delete("/delete/:id", async (req,res)=>{
+  try{
+    let id = req.params.id;//user will provide the id of the user to delete.
+    let user = await User.findByIdAndDelete(id);//we find the user by id and delete the user.
+    return res.status(200).send("user deleted successfully.");//200 means that the user is deleted successfully.
   }
   catch(error){
     return res.status(400).json({message:"User not found"});//400 means that the user is not found.
