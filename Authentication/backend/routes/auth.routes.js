@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import { signUp } from '../controllers/auth.controller';
+import { signUp } from '../controllers/auth.controller.js';
 
-const authRouter = express(Router());
+const authRouter = Router(); // fixed the Router initialization
 
-authRouter.post("/signup",(req,signUp)); // we are using the signUp function from the auth.controller.js file
+authRouter.post("/signup", signUp); // fixed the signUp function usage
 
 export default authRouter;
