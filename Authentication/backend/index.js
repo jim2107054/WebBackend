@@ -9,7 +9,7 @@ const app = express();
 let port = process.env.PORT || 4000;//if we don't have port in env file then it will run on 4000
 
 // Middleware
-app.use("/api",authRouter); // we are using the authRouter from the auth.routes.js file. because we want to use the routes from that file
+app.use("/auth",authRouter); // we are using the authRouter from the auth.routes.js file. because we want to use the routes from that file
 
 app.use(express.json());
 

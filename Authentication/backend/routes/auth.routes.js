@@ -1,8 +1,8 @@
-import express, { Router } from 'express';
+import express from 'express';
 import { signUp } from '../controllers/auth.controller.js';
 
-const authRouter = express(Router()); // fixed the Router initialization
+const authRouter = express.Router(); // ✅ Correct initialization
 
-authRouter.post("/signup", signUp); // fixed the signUp function usage
+authRouter.post("/signup", signUp); // ✅ Correct route definition
 
 export default authRouter;

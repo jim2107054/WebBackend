@@ -1,36 +1,46 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import express from "express";
+
+const app = express();
+app.use(express.json());
 
 export const signUp = async (req, res) => {
     try {
-        // for signing up a user. user will provide firstName, lastName, userName, email, password, and profileImage
-        const {firstName,lastName,userName,email,password} = req.body;
-        //If user doesn't provide any of the above fields, then we will return a 400 status code with a message saying that the user didn't provide the required fields.
-        if(!firstName || !lastName || !userName || !email || !password){
-            return res.status(400).json({message:"Please provide all the required fields"});
+        // Ensure req.body is defined
+        if (!req.body) {
+            return res.status(400).json({ message: "Request body is missing" });
         }
 
-        // check if the user already exists
-        const userExists = await User.findOne({email});//to check if the user already exists in the database. it return true or false.
-        if(userExists){
-            return res.status(400).json({message:"user already exists"});
+        // Destructure required fields from req.body
+        let { lastName, userName, email, password } = req.body;
+
+        // Check if any required field is missing
+        if (!lastName || !userName || !email || !password) {
+            return res.status(400).json({ message: "Please provide all the required fields" });
         }
-        //make the password hash, using bcrypt
+
+        // Check if the user already exists
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        // Hash the password using bcrypt
         const hashedPassword = await bcrypt.hash(password, 10);
-        // create a new user
-        const user = await User.create(
-            {
-                firstName,
-                lastName,
-                userName,
-                email,
-                password: hashedPassword
-            }
-        )
-        res.status(201).json({ message: "User created successfully" });
+
+        // Create a new user
+        const user = await User.create({
+            lastName,
+            userName,
+            email,
+            password: hashedPassword
+        });
+
+        // Return the created user object in the response
+        res.status(201).json({ message: "User created successfully", user });
     } catch (error) {
-        return res.status(500).json({ message: "An error occurred while signing up" });
+        console.error(error);
+        return res.status(500).json({ message: "An error occurred while signing up", error: error.message });
     }
 }
-
-export default signUp;
