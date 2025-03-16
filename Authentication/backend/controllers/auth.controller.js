@@ -36,12 +36,13 @@ export const signUp = async (req, res) => {
         });
 
         //Generate token
-        let token = generateToken(user._id);
+        // Pass an object containing the user ID to generateToken
+        let token = generateToken({ id: user._id });
 
         res.cookie("token", token,{
             httpOnly:true,
             secure:process.env.NODE_ENVIRONMENT == "production",
-            samesite:"strict",
+            sameSite:"strict",
             maxAge:1000*60*60*24*30// write maxAge in milliseconds
         });
 
