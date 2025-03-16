@@ -95,11 +95,58 @@ export const Login = async (req,res) =>{
             maxAge:1000*60*60*24*30// write maxAge in milliseconds
         })
 
-        return res.status(200).json({message:"Logged in successfully"});
+        return res.status(200).json({message:"Logged in successfully",user:{
+            id:userAse._id,
+            firstName:userAse.firstName,
+            lastName:userAse.lastName,
+            userName:userAse.userName,
+            email:userAse.email
+        }});
         
      }
      catch(error){
          console.error("Login error:",error);
          return res.status(500).json({message:"An error occurred while logging in",error:error.message});
      }
+}
+
+// Logout
+// This function will be called when the user sends a GET request to /api/auth/logout
+export const Logout = async (req,res) =>{
+    try{
+        res.clearCookie("token");// clear the token cookie, so that the user is logged out. because the token is no longer valid.
+        return res.status(200).json({message:"Logged out successfully"});
+    }
+    catch(error){
+        return res.status(500).json({message:"An error occurred while logging out",error:error.message});
+    }
+}
+
+//delete user
+export const deleteUser = async (req,res) =>{
+    let {email} = req.body;
+    try{
+        let userExists = await User.findOne({email});
+        if(!userExists){
+            return res.status(404).json({message:"User does not exist"});
+        }
+        //take password from user
+        let {password} = req.body;
+
+        //check password with the hashed password
+        let passwordMatch = await bcrypt.compare(password, userExists.password);
+        if(!passwordMatch){
+            return res.status(400).json({message:"Incorrect password"});
+        }
+
+        let user = await User.findOneAndDelete({email});
+        if(!user){
+            return res.status(404).json({message:"User does not exist"});
+        }
+        res.clearCookie("token");
+        return res.status(200).json({message:"Account deleted successfully"});
+    }
+    catch(error){
+        return res.status(500).json({message:"An error occurred while deleting user",error:error.message});
+    }
 }
