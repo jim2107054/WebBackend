@@ -13,13 +13,13 @@ let port = process.env.PORT || 4000;//if we don't have port in env file then it 
 // Middleware 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:3000",//server will only accept request from this origin
+  origin: "http://localhost:5173",//server will only accept request from this origin
   credentials: true
 }))
 app.use(cookieParser());//we are using cookie parser to parse the cookies, sothat when token is sent in the cookie, we can parse it and use it
 
 // All the middlewares should be above the routes, otherwise the routes will not be able to use the middlewares
-app.use("/api/auth",authRouter); // we are using the authRouter from the auth.routes.js file. because we want to use the routes from that file
+app.use("/api",authRouter); // we are using the authRouter from the auth.routes.js file. because we want to use the routes from that file
 
 app.get("/",(req,res)=>{
   res.send("Server is running");
