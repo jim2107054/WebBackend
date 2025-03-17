@@ -3,7 +3,7 @@ import React, { createContext } from 'react'
 export const dataContext = createContext();
 
 const UserContext = ({children}) => {
-    const serverUrl = 'http://localhost:8000'
+    const serverUrl = 'https://web-backend-weld.vercel.app'
     const value = {
         serverUrl
     }
