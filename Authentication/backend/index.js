@@ -14,6 +14,7 @@ let port = process.env.PORT || 4000;//if we don't have port in env file then it 
 app.use(express.json());
 app.use(cors({
   origin: "http://localhost:5173",//server will only accept request from this origin
+  methods: ["POST","PUT","GET"],//server will only accept these methods
   credentials: true
 }))
 app.use(cookieParser());//we are using cookie parser to parse the cookies, sothat when token is sent in the cookie, we can parse it and use it
