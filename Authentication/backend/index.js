@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRouter from './routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 dotenv.config();
 
 let app = express();
@@ -11,6 +12,10 @@ let port = process.env.PORT || 4000;//if we don't have port in env file then it 
 
 // Middleware 
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000",//server will only accept request from this origin
+  credentials: true
+}))
 app.use(cookieParser());//we are using cookie parser to parse the cookies, sothat when token is sent in the cookie, we can parse it and use it
 
 // All the middlewares should be above the routes, otherwise the routes will not be able to use the middlewares
