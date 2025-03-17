@@ -13,7 +13,7 @@ let port = process.env.PORT || 4000;//if we don't have port in env file then it 
 // Middleware 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",//server will only accept request from this origin
+  origin: "https://web-backend-54.vercel.app",//server will only accept request from this origin
   methods: ["POST","PUT","GET"],//server will only accept these methods
   credentials: true
 }))
