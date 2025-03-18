@@ -35,17 +35,17 @@ function Login() {
   return (
     <div className="bg-[#404b4a] w-full h-[100vh] justify-center items-center flex">
       {/* for signup from */}
-      <div className="w-[85%] max-w-[600px] h-[550px] bg-[#09403b] rounded-xl flex flex-col justify-center items-center gap-[15px]">
+      <div className="w-[85%] max-w-[550px] h-[450px] bg-[#09403b] rounded-xl flex flex-col justify-center items-center gap-[15px]">
         <h1 className="text-white -mt-2 mb-5 text-[20px] font-semibold">Login</h1>
         <form className="w-full p-0.5 flex flex-col justify-center items-center" onSubmit={handleLogin}>
 
-        <div className="w-[95%] h-[50px] flex justify-center gap-3 mt-4">
+        <div className="w-[80%] h-[50px] flex justify-center gap-3 mt-4">
             <input type="email" placeholder="email" className="w-full rounded p-4" value={email} onChange={setEmailHandler}/>
           </div>
-          <div className="w-[95%] h-[50px] flex justify-center gap-3 mt-4">
+          <div className="w-[80%] h-[50px] flex justify-center gap-3 mt-4">
             <input type="password" placeholder="password" className="w-full rounded p-4" value={password} onChange={setPasswordHandler}/>
           </div>
-          <div className="w-[95%] h-[55px] flex justify-center gap-3 mt-4">
+          <div className="w-[90%] h-[55px] flex justify-center gap-3 mt-4">
             <button className="w-[50%] mt-2 text-white font-semibold bg-[#6a3fba] rounded-[10px] cursor-pointer hover:bg-[#5cee5c] hover:border-[1px] hover:text-black" type="submit">Login</button>
           </div>
         </form>
