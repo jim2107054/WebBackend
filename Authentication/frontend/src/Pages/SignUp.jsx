@@ -79,6 +79,7 @@ function SignUp() {
           <div className="w-[95%] h-[55px] flex justify-center gap-3 mt-4">
             <button className="w-full mt-2 text-white font-semibold bg-[#6a3fba] rounded-[10px] cursor-pointer hover:bg-[#5cee5c] hover:border-[1px] hover:text-black" type="submit">Sign Up</button>
           </div>
+          <p className="text-[#efe8e8] mr-5 mt-3">Already Have an account? <a className="font-bold text-[#9494e8] ml-2" href="http://localhost:5173/login">Login</a></p>
         </form>
       </div>
     </div>

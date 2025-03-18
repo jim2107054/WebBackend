@@ -45,9 +45,10 @@ function Login() {
           <div className="w-[80%] h-[50px] flex justify-center gap-3 mt-4">
             <input type="password" placeholder="password" className="w-full rounded p-4" value={password} onChange={setPasswordHandler}/>
           </div>
-          <div className="w-[90%] h-[55px] flex justify-center gap-3 mt-4">
-            <button className="w-[50%] mt-2 text-white font-semibold bg-[#6a3fba] rounded-[10px] cursor-pointer hover:bg-[#5cee5c] hover:border-[1px] hover:text-black" type="submit">Login</button>
+          <div className="w-[80%] h-[55px] flex justify-center gap-3 mt-4">
+            <button className="w-[100%] h-[45px] mt-0 text-white font-semibold bg-[#6a3fba] rounded-[10px] cursor-pointer hover:bg-[#5cee5c] hover:border-[1px] hover:text-black" type="submit">Login</button>
           </div>
+          <p className="text-[#efe8e8] mr-5 mt-2">Create new account.<a className="font-bold text-[#9494e8] ml-2" href="http://localhost:5173/signup">SignUp</a></p>
         </form>
       </div>
     </div>
