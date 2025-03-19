@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { dataContext } from "../context/UserContext";
 import axios from 'axios';
 import dp from '../assets/dp.webp';
@@ -11,6 +11,9 @@ function SignUp() {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  //we will use useRef to get the file from the input field
+  let file = useRef(null);//initially it is null. when we click on the input field, it will get the file.
 
   const handleSignUp = async (e) => {
     e.preventDefault();//prevent page from reloading
@@ -50,17 +53,31 @@ function SignUp() {
     setPassword(e.target.value);
   };
 
+  const [frontendImage, setFrontendImage] = useState(dp)
+  const [backendImage, setBackendImage] = useState(null)
+
+  function handleImage(e){
+    let file = e.target.files[0];
+    setBackendImage(file);//this will store the file in the backend
+
+    //now we want to show the image in the frontend, so we need to convert the file into url
+    let image = URL.createObjectURL(file);
+    setFrontendImage(image);
+  }
+
   return (
     <div className="bg-[#404b4a] w-full h-[100vh] justify-center items-center flex">
       {/* for signup from */}
       <div className="w-[85%] max-w-[600px] h-[550px] bg-[#09403b] rounded-xl flex flex-col justify-center items-center gap-[15px]">
         <h1 className="text-white -mt-2 mb-5 text-[20px] font-semibold">Sign Up</h1>
         <form className="w-full p-0.5 flex flex-col justify-center items-center" onSubmit={handleSignUp}>
+          <input type="file" className="hidden" ref={file} onChange={handleImage}/>
 
         {/* add user image */}
         <div className="w-[100px] h-[100px] rounded-full bg-[#e4e0ec] overflow-hidden relative border-2 border-white">
-          <img src={dp} alt="dp" className="w-full h-full object-cover rounded-full"/>
-          <div className="absolute w-[100%] h-[100%] bg-black top-0 opacity-0 hover:opacity-50 cursor-pointer flex justify-center items-center text-white font-bold text-2xl">
+          <img src={frontendImage} alt="dp" className="w-full h-full object-cover rounded-full"/>
+          <div className="absolute w-[100%] h-[100%] bg-black top-0 opacity-0 hover:opacity-50 cursor-pointer flex justify-center items-center text-white font-bold text-2xl"
+          onClick={() => file.current.click()}>
             +
           </div>
         </div>
